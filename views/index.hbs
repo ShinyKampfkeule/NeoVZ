@@ -1,0 +1,79 @@
+<h1>Neo4j Playroom</h1>
+<p>Welcome to Neo4j</p>
+<form method="post" action="/write">
+    <label>Personal ID</label>
+    <br>
+    <input type="number" name=personalid>
+    <br>
+    <label>Vorname</label>
+    <br>
+    <input type="text" name=forename>
+    <br>
+    <label>Nachname</label>
+    <br>
+    <input type="text" name=surname>
+    <br>
+    <label>Geburtsdatum</label>
+    <br>
+    <input type="date" name=dateOfBirth>
+    <br>
+    <label>Abteilung</label>
+    <br>
+    <select name=department onchange="changeSelect(this)">
+        <option value="Abteilung wählen">Abteilung wählen</option>
+        <option value="Unternehmensleitung">Unternehmensleitung</option>
+        <option value="HR">HR</option>
+        <option value="IT">IT</option>
+        <option value="Filiale">Filiale</option>
+    </select>
+    <br>
+    <label>Position</label>
+    <br>
+    <select name=position id="position">
+        <option value="Abteilung auswählen">Abteilung auswählen</option>
+    </select>
+    <button type="submit">Write Data</button>
+</form>
+<br>
+<br>
+<table>
+    <tr>
+        <th>Personal ID</th>
+        <th>Vorname</th>
+        <th>Nachname</th>
+        <th>Geburtsdatum</th>
+        <th>Abteilung</th>
+        <th>Position</th>
+        <th>Optionen</th>
+    </tr>
+    {{#each persons}}
+        <form>
+            <tr>
+                <input type="hidden" name="id" value="{{this.id}}">
+                <td>{{this.personalid}}<input type="hidden" name="personalid" value="{{this.personalid}}"></td>
+                <td>{{this.forename}}<input type="hidden" name="forename" value="{{this.forename}}"></td>
+                <td>{{this.surname}}<input type="hidden" name="surname" value="{{this.surname}}"></td>
+                <td>{{this.dateOfBirth}}<input type="hidden" name="dateOfBirth" value="{{this.dateOfBirth}}"></td>
+                <td>{{this.department}}<input type="hidden" name="department" value="{{this.department}}"></td>
+                <td>{{this.position}}<input type="hidden" name="position" value="{{this.position}}"></td>
+                <td><button type="submit" formaction="/edit" formmethod="post">Edit</button><button type="submit" formaction="/delete" formmethod="post">Delete</button></td>
+            </tr>
+        </form>
+    {{/each}}
+</table>
+<br>
+<br>
+<h2>Search</h2>
+<br>
+<form method="get" action="/">
+    <label>
+        Position
+        <br>
+        <input type="search" name="searchPosition">
+    </label>
+    <button type="submit">Search</button>
+    <br>
+    <br>
+    <button type="submit">Reset Search</button>
+</form>
+
