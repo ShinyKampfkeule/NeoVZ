@@ -6,9 +6,6 @@ let logger = require('morgan');
 let driver = require('./neo4j')
 
 let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
-let writeRouter = require('./routes/write');
-let deleteRouter = require('./routes/delete');
 let editRouter = require('./routes/edit');
 
 let app = express();
@@ -30,9 +27,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/write', writeRouter);
-app.use('/delete', deleteRouter);
 app.use('/edit', editRouter);
 
 // catch 404 and forward to error handler

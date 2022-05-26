@@ -5,34 +5,34 @@ var driver = require('../neo4j')
 /* GET home page. */
 router.post('/', async function(req, res, next) {
 
-  const {id, personalid, forename, surname, dateOfBirth, department, position} = req.body;
+  const {id, forename, surname, dateOfBirth, domicile, relation, relationSince, friendsSince} = req.body;
 
   data = {
-    id: {label: 'id', value: id, type: 'hidden'},
-    personalid: {label: 'personalid', value: personalid, type: 'number'},
-    forename: {label: 'forename', value: forename, type: 'text'},
-    surname: {label: 'surname', value: surname, type: 'text'},
-    dateOfBirth: {label: 'dateOfBirth', value: dateOfBirth, type: 'date'},
-    department: {label: 'department', value: department, type: 'text'},
-    position: {label: 'position', value: position, type: 'text'}
+    forename: {label: 'Vorname', name: 'forename', value: forename, type: 'text'},
+    surname: {label: 'Nachname', name: 'surname', value: surname, type: 'text'},
+    dateOfBirth: {label: 'Geburtsdatum', name: 'dateOfBirth', value: dateOfBirth, type: 'date'},
+    domicile: {label: 'Wohnort', name: 'domicile', value: domicile, type: 'text'},
+    relation: {label: 'Beziehung', name: 'relation', value: relation, type: 'text'},
+    relationSince: {label: 'Beziehung seit', name: 'relationSince', value: relationSince, type: 'date'},
+    friendsSince: {label: 'Freunde seit', name: 'friendsSince', value: friendsSince, type: 'date'}
   }
 
-  res.render('edit', {data: data});
+  res.render('edit', {data: data, id: id});
 
 });
 
 router.post('/save', async function (req, res, next) {
 
-  const {id, personalid, forename, surname, dateOfBirth, department, position} = req.body;
+  const {id, forename, surname, dateOfBirth, domicile, relation, relationSince, friendsSince} = req.body;
 
   const active_driver = driver.getDriver()
   const session = active_driver.session()
 
   try {
-    const result = await session.writeTransaction(tx =>
+    await session.writeTransaction(tx =>
       tx.run(
-        'MATCH (p) WHERE id(p) = $id SET p.personalid = $personalid, p.forename = $forename, p.surname = $surname, p.dateOfBirth = $dateOfBirth, p.department = $department, p.position = $position RETURN p',
-        { id: parseInt(id), personalid: personalid, forename: forename, surname: surname, dateOfBirth: dateOfBirth, department: department, position: position }
+        'MATCH (p:Person {id: $id}) SET p.forename = $forename, p.surname = $surname, p.dateOfBirth = $dateOfBirth, p.domicile = $domicile, p.relation = $relation, p.relationSince = $relationSince, p.friendsSince = $friendsSince RETURN p',
+        {id: id, forename: forename, surname: surname, dateOfBirth: dateOfBirth, domicile: domicile, relation: relation, relationSince: relationSince, friendsSince: friendsSince}
       )
     )
   } finally {
