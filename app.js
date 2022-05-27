@@ -5,6 +5,7 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let driver = require('./neo4j')
 
+let loginRouter = require('./routes/login');
 let indexRouter = require('./routes/index');
 let editRouter = require('./routes/edit');
 
@@ -26,7 +27,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/', loginRouter)
+app.use('/neovz', indexRouter);
 app.use('/edit', editRouter);
 
 // catch 404 and forward to error handler

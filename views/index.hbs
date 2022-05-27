@@ -1,6 +1,6 @@
 <h1>NeoVZ</h1>
 <br>
-<h2>Freundesliste</h2>
+<h2>Freundesliste von {{user.forename}} {{user.surname}}</h2>
 <br>
 <table>
     <tr>
@@ -23,11 +23,11 @@
                 <td>{{this.relation}}<input type="hidden" name="relation" value="{{this.relation}}"></td>
                 <td>{{this.relationSince}}<input type="hidden" name="relationSince" value="{{this.relationSince}}"></td>
                 <td>{{this.friendsSince}}<input type="hidden" name="friendsSince" value="{{this.friendsSince}}"></td>
-                <td><button type="submit" formaction="/edit" formmethod="post">Edit</button><button type="submit" formaction="/deleteFriend" formmethod="post">Delete</button></td>
+                <td><button type="submit" formaction="/edit" formmethod="post">Edit</button><button type="submit" formaction="/neovz/deleteFriend" formmethod="post">Delete</button></td>
             </tr>
         </form>
     {{/each}}
-    <form method="post" action="/saveFriend">
+    <form method="post" action="/neovz/saveFriend">
         <tr>
             <td>
                 <input type="text" name=forename>
@@ -58,20 +58,30 @@
 </table>
 <br>
 <br>
-
-<!--<br>-->
-<!--<br>-->
-<!--<h2>Search</h2>-->
-<!--<br>-->
-<!--<form method="get" action="/">-->
-<!--    <label>-->
-<!--        Position-->
-<!--        <br>-->
-<!--        <input type="search" name="searchPosition">-->
-<!--    </label>-->
-<!--    <button type="submit">Search</button>-->
-<!--    <br>-->
-<!--    <br>-->
-<!--    <button type="submit">Reset Search</button>-->
-<!--</form>-->
+<h2>Search</h2>
+<br>
+<form method="get" action="/neovz">
+    <label>
+        Relation
+        <br>
+        <input type="hidden" name="categorie" value="relation">
+        <select name="search">
+            {{#each relations}}
+                <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select>
+    </label>
+    <button type="submit">Search</button>
+    <br>
+    <br>
+</form>
+<form method="get" action="/neovz">
+    <button type="submit">Reset Search</button>
+</form>
+<br>
+<br>
+<br>
+<form method="post" action="/neovz/saveMany">
+    <button type="submit">Import Dummy Data</button>
+</form>
 
