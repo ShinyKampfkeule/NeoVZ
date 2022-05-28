@@ -95,6 +95,8 @@ router.post('/saveFriend', async function(req, res) {
   const session = active_driver.session()
   const {forename, surname, dateOfBirth, domicile, relation, relationSince, friendsSince} = req.body;
 
+  console.log(forename)
+
   let gen_id = () => {
     let str4 = () => {
       return Math.floor((1 + Math.random()) * 0x10000)
