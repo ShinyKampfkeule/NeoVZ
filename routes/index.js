@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let driver = require('../neo4j')
+const dummyData = require("../public/json/dummy_data.json");
 
 let searchString, user
 
@@ -144,28 +145,21 @@ router.post('/deleteFriend', async function(req, res) {
 
 router.post('/saveMany', async function (req, res) {
 
-  const active_driver = driver.getDriver()
-  const session = active_driver.session()
+  const dummyData = require('../public/json/dummy_data.json')
 
   try {
-    let gen_id = () => {
-      let str4 = () => {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1)
+    dummyData.map(entry => {
+      let gen_id = () => {
+        let str4 = () => {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1)
+        }
+        return str4() + str4() + '-' + str4() + '-' + str4() + '-' + str4() + '-' + str4() + str4() + str4()
       }
-      return str4() + str4() + '-' + str4() + '-' + str4() + '-' + str4() + '-' + str4() + str4() + str4()
-    }
 
-    const people = [
-      [gen_id(), 'Franziska', 'Rothenstein', '1964-11-23', 'Gosserweiler-Stein', 'Tante', '2008-12-25', '2019-08-17'],
-      [gen_id(), 'Sophia', 'Metzger', '1953-03-09', 'Bochum', 'Lehrerin', '2001-06-01', '2021-08-05'],
-      [gen_id(), 'Eric', 'Drescher', '1956-05-10', 'Dorndorf-Steudnitz', 'Onkel', '1995-04-04', '2021-05-05'],
-      [gen_id(), 'Kevin', 'Drechsler', '1995-11-03', 'Witten Haven', 'Kommilitonen', '2020-10-12', '2021-01-15']
-    ]
+      writeData(entry, gen_id())
 
-    people.forEach(person => {
-      writeData(person)
     })
   } finally {
     res.redirect('/neovz');
@@ -173,7 +167,7 @@ router.post('/saveMany', async function (req, res) {
 
 })
 
-async function writeData (data) {
+async function writeData (entry, gen_id) {
 
   const active_driver = driver.getDriver()
   const session = active_driver.session()
@@ -183,8 +177,8 @@ async function writeData (data) {
       tx.run(
         'MATCH (user:Person {user: $user}) ' +
         'CREATE (p:Person) SET p.id = $id, p.forename = $forename, p.surname = $surname, p.dateOfBirth = $dateOfBirth, p.domicile = $domicile, p.relation = $relation, p.relationSince = $relationSince, p.friendsSince = $friendsSince ' +
-        `CREATE (p)-[rel: IS_${data[5].replace(/\s+/g, "_").toUpperCase()}_OF]->(user)`,
-        {id: data[0], forename: data[1], surname: data[2], dateOfBirth: data[3], domicile: data[4], relation: data[5], relationSince: data[6], friendsSince: data[7], user: true}
+        `CREATE (p)-[rel: IS_${entry.relation.replace(/\s+/g, "_").toUpperCase()}_OF]->(user)`,
+        {id: gen_id, forename: entry.forename, surname: entry.surname, dateOfBirth: entry.dateOfBirth, domicile: entry.domicile, relation: entry.relation, relationSince: entry.relationSince, friendsSince: entry.friendsSince, user: true}
       )
     )
   } finally {

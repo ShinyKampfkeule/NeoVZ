@@ -1,12 +1,35 @@
-<h1>Bearbeiten</h1>
-
-<form method="post" action="/edit/save">
-    <input type="hidden" name="id" value="{{id}}">
-    {{#each data}}
-        <label>{{this.label}}</label>
-        <input type="{{this.type}}" name="{{this.name}}" value="{{this.value}}">
-        <br>
-        <br>
-    {{/each}}
-    <button type="submit">Save</button>
-</form>
+<div class="grid-container-edit">
+    <div class="grid-element-edit-1">
+        <h1 class="title-edit blue1">neo</h1>
+        <h1 class="title-edit red1">VZ</h1>
+    </div>
+    <div class="heading">
+        <h1 class="titleEdit">Bearbeiten von {{data.forename.value}} {{data.surname.value}}</h1>
+    </div>
+    <div class="data">
+        <form method="post" action="/edit/save">
+            <input type="hidden" name="id" value="{{id}}">
+            <table>
+                <tbody>
+                    {{#each data}}
+                        <tr>
+                            <td>
+                                <label>
+                                    {{this.label}}
+                                    <br>
+                                    <input type="{{this.type}}" name="{{this.name}}" value="{{this.value}}">
+                                    <br>
+                                </label>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    <tr>
+                        <td>
+                            <button type="submit">Save</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

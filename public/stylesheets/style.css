@@ -1,5 +1,6 @@
 :root {
   --main-color: rgb(224, 96, 95);
+  --main-color-trans: rgba(224, 96, 95, .25);
   --white-color: rgb(255, 255, 255);
   --secondary-color-1: rgb(230, 230, 230);
   --secondary-color-2: rgb(183, 183, 183);
@@ -39,11 +40,15 @@ body {
   height: 100%;
   text-align: center;
   border-radius: 20px;
-  box-shadow: 8px 8px 20px 2px #173f36;
+  box-shadow: 8px 8px 20px 2px #672828;
   margin: 0 auto;
   position: relative;
   grid-row: 2;
   grid-column: 2;
+}
+
+.login-background {
+  background-color: var(--main-color);
 }
 
 .login h1 {
@@ -67,12 +72,14 @@ body {
 }
 
 .login button {
-  border: none;
-  border-radius: 20px;
-  background-color: var(--secondary-color-2);
   width: 40%;
   height: 5vh;
   margin-top: 2%;
+  font-size: 1rem;
+  color: var(--secondary-color-red1);
+  border-radius: 20px;
+  border: 1px solid var(--secondary-color-red1);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .title {
@@ -194,13 +201,7 @@ body {
   grid-column-end: 4;
   grid-row: 3;
   border-left: 1px solid var(--main-color);
-}
-
-.grid-element-8 input {
-  font-size: 1rem;
-  color: var(--secondary-color-red1);
-  border-radius: 5px;
-  border: 1px solid var(--secondary-color-red1);
+  display: flex;
 }
 
 .blue1 {
@@ -212,24 +213,178 @@ body {
 }
 
 .friendsTable {
-  font-size: 1rem;
+  font-size: 1.3rem;
   text-align: center;
   width: 100%;
-  overflow-y: scroll;
   padding-top: 1%;
 }
 
-.scrollable {
-  overflow-y: scroll;
-  height: 100%;
+.friendsTable, .friendsTable td {
+  border-collapse: collapse;
+}
+
+.friendsTable thead {
+  display: table;
+  width: 84%;
+  position: fixed;
+  background-color: white;
+  height: 2%;
+}
+
+.friendsTable tbody {
+  display: block;
+  max-height: 100%;
+  overflow-y: -moz-scrollbars-none;
+  padding-top: 3%;
+}
+
+.friendsTable th, td {
+  width: 12.5%;
+  word-break: break-all;
+  color: var(--secondary-color-red1);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.friendsTable tr {
+  display: table;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.friendsTable td {
+  text-align: center;
+  border-bottom: 1px solid var(--main-color-trans);
+  border-left: none;
+}
+
+.friendsTable thead tr {
+  margin: .5% auto;
+}
+
+.friendsTable button {
+  width: 40%;
+  font-size: 1rem;
+  color: var(--secondary-color-red1);
+  border-radius: 20px;
+  border: 1px solid var(--secondary-color-red1);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.friendsTable .rightBtn {
+  margin-left: 2%;
 }
 
 .hidden {
   display: none;
 }
 
-.forename {
-  margin-left: .5%;
-  margin-right: 2%;
-  width: 8%;
+.addFriend {
+  width: 122.5%;
+  height: 100%;
+  text-align: center;
 }
+
+.addFriend td {
+  width: 12.5%;
+  height: 100%;
+}
+
+.addFriend input {
+  font-size: 1rem;
+  color: var(--secondary-color-red1);
+  border-radius: 5px;
+  border: 1px solid var(--secondary-color-red1);
+  width: 80%;
+  margin: auto 8%;
+  text-align: center;
+  height: 35%;
+}
+
+.addFriend label {
+  font-size: 1rem;
+  color: var(--secondary-color-red1);
+}
+
+.addFriend button {
+  width: 75%;
+  height: 40%;
+  margin-top: 18%;
+  font-size: 1rem;
+  color: var(--secondary-color-red1);
+  border-radius: 20px;
+  border: 1px solid var(--secondary-color-red1);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.grid-container-edit {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-columns: 15% 68.4% 15%;
+  grid-template-rows: 9.2% 80% 10%;
+  column-gap: .8%;
+  row-gap: .8%;
+}
+
+.heading {
+  grid-column: 2;
+  grid-row: 1;
+  background-color: var(--secondary-color-red2);
+}
+
+.data {
+  grid-row: 2;
+  grid-column: 2;
+  border-left: 1px solid var(--secondary-color-red2);
+  border-right: 1px solid var(--secondary-color-red2);
+  border-bottom: 1px solid var(--secondary-color-red2);
+  padding-top: 2%;
+}
+
+.titleEdit {
+  font-size: 3rem;
+  position: relative;
+  top: calc(100% / 2 - 4rem);
+  color: var(--white-color);
+  margin-left: 2%;
+}
+
+.data td {
+  padding-left: 5%;
+  padding-top: 2%;
+}
+
+.data input {
+  font-size: 1rem;
+  color: var(--secondary-color-red1);
+  border-radius: 5px;
+  border: 1px solid var(--secondary-color-red1);
+  width: 20%;
+  text-align: center;
+  height: 35%;
+  margin-top: 1%;
+}
+
+.data button {
+  width: 20%;
+  height: 40%;
+  font-size: 1rem;
+  color: var(--secondary-color-red1);
+  border-radius: 20px;
+  border: 1px solid var(--secondary-color-red1);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.grid-element-edit-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white-color);
+}
+
+.title-edit {
+   font-size: 4rem;
+   position: relative;
+   top: calc(100% / 2 - 3rem);
+ }

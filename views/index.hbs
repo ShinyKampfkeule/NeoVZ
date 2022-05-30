@@ -20,7 +20,7 @@
                             {{/each}}
                         </select>
             </label>
-            <button type="submit">Search</button>
+            <button class="hvrButton" type="submit">Search</button>
             <br>
             <br>
         </form>
@@ -42,7 +42,7 @@
                     <th>Optionen</th>
                 </tr>
             </thead>
-            <tbody class="scrollable">
+            <tbody>
             {{#each persons}}
                 <form>
                     <tr>
@@ -54,7 +54,7 @@
                         <td>{{this.relation}}<input type="hidden" name="relation" value="{{this.relation}}"></td>
                         <td>{{this.relationSince}}<input type="hidden" name="relationSince" value="{{this.relationSince}}"></td>
                         <td>{{this.friendsSince}}<input type="hidden" name="friendsSince" value="{{this.friendsSince}}"></td>
-                        <td><button type="submit" formaction="/edit" formmethod="post">Edit</button><button type="submit" formaction="/neovz/deleteFriend" formmethod="post">Delete</button></td>
+                        <td><button type="submit" formaction="/edit" formmethod="post">Edit</button><button class="rightBtn" type="submit" formaction="/neovz/deleteFriend" formmethod="post">Delete</button></td>
                     </tr>
                 </form>
             {{/each}}
@@ -67,15 +67,71 @@
         </form>
     </div>
     <div class="grid-element-8">
-        <form class="newFriend">
-            <input type="text" name=forename class="forename">
-            <input type="text" name=surname>
-            <input type="date" name=dateOfBirth>
-            <input type="text" name=domicile>
-            <input type="text" name=relation>
-            <input type="date" name=relationSince>
-            <input type="date" name=friendsSince value="{{this.date}}">
-            <button type="submit" formmethod="post" formaction="neovz/saveFriend">Save</button>
+        <form>
+            <table class="addFriend">
+                <tr>
+                    <td>
+                        <label>
+                            Vorname
+                            <br>
+                            <br>
+                            <input type="text" name=forename>
+                        </label>
+
+                    </td>
+                    <td>
+                        <label>
+                            Nachname
+                            <br>
+                            <br>
+                            <input type="text" name=surname>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            Geburtsdatum
+                            <br>
+                            <br>
+                            <input type="date" name=dateOfBirth>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            Wohnort
+                            <br>
+                            <br>
+                            <input type="text" name=domicile>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            Beziehung
+                            <br>
+                            <br>
+                            <input type="text" name=relation>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            Beziehung seit
+                            <br>
+                            <br>
+                            <input type="date" name=relationSince>
+                        </label>
+                    </td>
+                    <td>
+                        <label>
+                            Freunde seit
+                            <br>
+                            <br>
+                            <input type="date" name=friendsSince value="{{this.date}}">
+                        </label>
+                    </td>
+                    <td>
+                        <button type="submit" formmethod="post" formaction="neovz/saveFriend">Speichern</button>
+                    </td>
+                </tr>
+            </table>
         </form>
     </div>
 </div>
