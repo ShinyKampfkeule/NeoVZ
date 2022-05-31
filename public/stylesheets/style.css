@@ -16,12 +16,24 @@ body {
   margin: 0;
 }
 
-.grid-container {
-  display: grid;
-  height: 100vh;
-  width: 100vw;
-  grid-template-columns: 35% 30% 35%;
-  grid-template-rows: 35% 30% 35%;
+@media only screen and (max-height: 1079px) {
+  .grid-container {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 35% 30% 35%;
+    grid-template-rows: 34% 32% 34%;
+  }
+}
+
+@media only screen and (min-height: 1080px) {
+  .grid-container {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 35% 30% 35%;
+    grid-template-rows: 35% 30% 35%;
+  }
 }
 
 .grid-container-main {
