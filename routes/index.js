@@ -1,7 +1,6 @@
 let express = require('express');
 let router = express.Router();
 let driver = require('../neo4j')
-const dummyData = require("../public/json/dummy_data.json");
 
 let searchString, user
 
@@ -11,9 +10,6 @@ router.get('/', async function(req, res) {
   const session = active_driver.session()
   const {search, categorie} = req.query
 
-  console.log(search)
-  console.log(categorie)
-
   let persons = []
   let relations = []
   let today = new Date().toISOString().split('T')[0]
@@ -22,16 +18,15 @@ router.get('/', async function(req, res) {
 
     switch (categorie) {
       case ('relation'):
-        searchString = `MATCH p=()-[r:IS_${search.replace(/\s+/g, "_").toUpperCase()}_OF]->() RETURN p`
+        // add Code to search Friends with specific relation
         break
       default:
-        searchString = 'MATCH (n:Person) RETURN n'
+        // add Code to search for all Friends
         break
     }
 
-    const result = await session.readTransaction(tx =>
-      tx.run(searchString)
-    )
+    // add Code to create readTransaction
+
     result.records.forEach(record => {
       if (categorie !== undefined) {
         if (!record['_fields'][0]['start']['properties']['user']) {
@@ -74,11 +69,7 @@ router.get('/', async function(req, res) {
       }
     })
 
-    const rel = await session.readTransaction(tx =>
-      tx.run(
-        'MATCH (n) WHERE EXISTS (n.relation) RETURN DISTINCT "node" as entity, n.relation AS relation UNION ALL MATCH ()-[r]-() WHERE EXISTS (r.relation) RETURN DISTINCT "relationship" AS entity, r.relation AS relation'
-      )
-    )
+    // add Code to search for all relations
 
     rel.records.forEach(record => {
       relations.push(record['_fields'][1])
@@ -108,14 +99,7 @@ router.post('/saveFriend', async function(req, res) {
   }
 
   try {
-    await session.writeTransaction(tx =>
-      tx.run(
-        'MATCH (user:Person {user: $user}) ' +
-          'CREATE (p:Person) SET p.id = $id, p.forename = $forename, p.surname = $surname, p.dateOfBirth = $dateOfBirth, p.domicile = $domicile, p.relation = $relation, p.relationSince = $relationSince, p.friendsSince = $friendsSince ' +
-          `CREATE (p)-[rel: IS_${relation.replace(/\s+/g, "_").toUpperCase()}_OF]->(user)`,
-        {id: gen_id(), forename: forename, surname: surname, dateOfBirth: dateOfBirth, domicile: domicile, relation: relation, relationSince: relationSince, friendsSince: friendsSince, user: true}
-      )
-    )
+    // add Code to create writeTransaction to add new Friend
   } finally {
     res.redirect('/neovz');
     await session.close()
@@ -131,12 +115,7 @@ router.post('/deleteFriend', async function(req, res) {
   const session = active_driver.session()
 
   try {
-    await session.writeTransaction(tx =>
-      tx.run(
-        'MATCH (p:Person {id: $id}) DETACH DELETE p',
-        {id: id}
-      )
-    )
+    // add Code to deleteFriend
   } finally {
     res.redirect('/neovz')
     await session.close()

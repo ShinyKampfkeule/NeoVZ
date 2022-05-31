@@ -3,7 +3,6 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
-let driver = require('./neo4j')
 
 let loginRouter = require('./routes/login');
 let indexRouter = require('./routes/index');
@@ -11,11 +10,18 @@ let editRouter = require('./routes/edit');
 
 let app = express();
 
+// Tutorialrelevant
+// ############################################################
+
+let driver = require('./neo4j')
+
 const uri = 'neo4j://localhost:7687'
 const name = 'neo4j'
 const password = 'test'
 
 driver.initDriver(uri, name, password)
+
+// ############################################################
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

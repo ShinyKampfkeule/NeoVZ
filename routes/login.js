@@ -4,22 +4,14 @@ let driver = require('../neo4j')
 
 router.get('/', async function (req, res, next) {
 
-  const active_driver = driver.getDriver()
-  const session = active_driver.session()
-
-  let user = await session.readTransaction(tx =>
-    tx.run(
-      'MATCH (p:Person {user: $state}) RETURN p' ,
-      {state: true}
-    )
-  )
+  // add Code to get User
 
   if (user.records.length !== 0) {
     res.redirect(`/neovz`)
-    await session.close()
+    // add Code to close Session
   } else {
     res.render('login');
-    await session.close()
+    // add Code to close Session
   }
 
 })
@@ -27,8 +19,7 @@ router.get('/', async function (req, res, next) {
 router.post('/login', async function (req, res, next) {
 
   const {forename, surname} = req.body
-  const active_driver = driver.getDriver()
-  const session = active_driver.session()
+  // add Code to get Driver and create Session
 
   let gen_id = () => {
     let str4 = () => {
@@ -40,15 +31,10 @@ router.post('/login', async function (req, res, next) {
   }
 
   try {
-    await session.writeTransaction(tx =>
-      tx.run(
-        'CREATE (p:Person) SET p.id = $id, p.forename = $forename, p.surname = $surname, p.user = $user RETURN p',
-        {id: gen_id(), forename: forename, surname: surname, user: true}
-      )
-    )
+    // add Code to save User in DB
   } finally {
     res.redirect('/neovz');
-    await session.close()
+    // add Code to close Session
   }
 })
 
