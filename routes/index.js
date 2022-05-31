@@ -87,8 +87,6 @@ router.post('/saveFriend', async function(req, res) {
   const session = active_driver.session()
   const {forename, surname, dateOfBirth, domicile, relation, relationSince, friendsSince} = req.body;
 
-  console.log(forename)
-
   let gen_id = () => {
     let str4 = () => {
       return Math.floor((1 + Math.random()) * 0x10000)
@@ -152,14 +150,7 @@ async function writeData (entry, gen_id) {
   const session = active_driver.session()
 
   try {
-    await session.writeTransaction(tx =>
-      tx.run(
-        'MATCH (user:Person {user: $user}) ' +
-        'CREATE (p:Person) SET p.id = $id, p.forename = $forename, p.surname = $surname, p.dateOfBirth = $dateOfBirth, p.domicile = $domicile, p.relation = $relation, p.relationSince = $relationSince, p.friendsSince = $friendsSince ' +
-        `CREATE (p)-[rel: IS_${entry.relation.replace(/\s+/g, "_").toUpperCase()}_OF]->(user)`,
-        {id: gen_id, forename: entry.forename, surname: entry.surname, dateOfBirth: entry.dateOfBirth, domicile: entry.domicile, relation: entry.relation, relationSince: entry.relationSince, friendsSince: entry.friendsSince, user: true}
-      )
-    )
+    // add Code to create writeTransaction to add many new Friends
   } finally {
     session.close()
   }

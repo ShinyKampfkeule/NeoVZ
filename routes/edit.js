@@ -38,21 +38,11 @@ router.post('/save', async function (req, res) {
     )
 
     await session.writeTransaction(tx =>
-      tx.run(
-        `MATCH (p:Person {id: $id})-[r:IS_${toEditUser.records[0]['_fields'][0]['properties']['relation'].replace(/\s+/g, "_").toUpperCase()}_OF]->()` +
-        `DELETE r`,
-        {id: id}
-      )
+      // add Code to create writeTransaction to delete a specific relation
     )
 
     await session.writeTransaction(tx =>
-      tx.run(
-        'MATCH (user:Person {user: $user}) ' +
-          'MATCH (p:Person {id: $id}) SET p.forename = $forename, p.surname = $surname, p.dateOfBirth = $dateOfBirth, p.domicile = $domicile, p.relation = $relation, p.relationSince = $relationSince, p.friendsSince = $friendsSince ' +
-          `CREATE (p)-[rel: IS_${relation.replace(/\s+/g,"_").toUpperCase()}_OF]->(user)`,
-        {id: id, forename: forename, surname: surname, dateOfBirth: dateOfBirth, domicile: domicile, relation: relation, relationSince: relationSince, friendsSince: friendsSince, user: true}
-      )
-    )
+    // add Code to create writeTransaction to add a new Friend with an relation
   } finally {
     res.redirect('/')
     await session.close()
